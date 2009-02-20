@@ -1,6 +1,6 @@
 package org.grails.plugins.console
 
-public class GroovyConsoleTests extends GroovyTestCase {
+public class GroovyShellTests extends GroovyTestCase {
   void testBinding() {
     def bindings = new Binding('foo0': 'bar0')
     def shell = new GroovyShell(bindings)
@@ -9,5 +9,9 @@ public class GroovyConsoleTests extends GroovyTestCase {
     assertNotNull bindings.variables.find {k, v -> k == 'foo1'}
     shell.evaluate("def foo2 = 'bar2'") //with 'def' keyword, the variable fail to bind
     assertNull bindings.variables.find {k, v -> k == 'foo2'}
+    shell.'foo3' = 'bar3' // set variable with obj.'var'
+    assertNotNull bindings.variables.find {k, v -> k == 'foo3'}
   }
+
+
 }
