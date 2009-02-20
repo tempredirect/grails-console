@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/console.iws" afterPath="$PROJECT_DIR$/console.iws" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugin.xml" afterPath="$PROJECT_DIR$/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/org/grails/plugins/console/ConsoleService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/org/grails/plugins/console/ConsoleService.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleGrailsPlugin.groovy" afterPath="$PROJECT_DIR$/ConsoleGrailsPlugin.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/conf/Config.groovy" afterPath="$PROJECT_DIR$/grails-app/conf/Config.groovy" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/TODO.txt" />
     </list>
     <ignored path="console.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -141,7 +136,7 @@
       <file leaf-file-name="ConsoleGrailsPlugin.groovy" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/ConsoleGrailsPlugin.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="25" selection-start="105" selection-end="105" vertical-scroll-proportion="0.03837472">
+            <state line="16" column="68" selection-start="719" selection-end="719" vertical-scroll-proportion="0.30699775">
               <folding />
             </state>
           </provider>
@@ -624,7 +619,7 @@
     <option name="PERFORM_CHECKOUT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_ADD_REMOVE_IN_BACKGROUND" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on a development layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactored" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="REFORMAT_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="REFORMAT_BEFORE_FILE_COMMIT" value="false" />
@@ -642,6 +637,7 @@
     <MESSAGE value="refactored test case" />
     <MESSAGE value="added codemirror lib" />
     <MESSAGE value="working on a development layout" />
+    <MESSAGE value="refactored" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -741,7 +737,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ConsoleGrailsPlugin.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="25" selection-start="105" selection-end="105" vertical-scroll-proportion="0.03837472">
+        <state line="16" column="68" selection-start="719" selection-end="719" vertical-scroll-proportion="0.30699775">
           <folding />
         </state>
       </provider>
