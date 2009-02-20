@@ -61,7 +61,7 @@ log4j = {
 
   warn 'org.mortbay.log'
 
-  debug 'org.grails.plugins.console'
+  trace 'org.grails.plugins.console'
 }
 
 

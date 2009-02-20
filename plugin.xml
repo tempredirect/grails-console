@@ -13,6 +13,7 @@ Install a web-based Groovy consle for interactive runtime application management
     <resource>spring.resources</resource>
     <resource>UrlMappings</resource>
     <resource>org.grails.plugins.console.ConsoleController</resource>
+    <resource>org.grails.plugins.console.ConsoleService</resource>
   </resources>
   <dependencies />
 </plugin>

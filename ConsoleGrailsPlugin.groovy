@@ -1,6 +1,6 @@
 class ConsoleGrailsPlugin {
     def version = 0.1,grailsVersion = "1.1-RC1 > *"
-    def dependsOn = [:],pluginExcludes = ["grails-app/views/error.gsp"]
+    def dependsOn = [:], pluginExcludes = ["grails-app/views/error.gsp"]
 
     def author = "Siegfried Puchbauer/Mingfai Ma", authorEmail = "siegfried.puchbauer@gmail.com / mingfai.ma@gmail.com"
     def title = "Web-based Groovy Console for Grails"

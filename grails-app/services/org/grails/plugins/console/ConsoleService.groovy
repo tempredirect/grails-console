@@ -5,9 +5,16 @@ import org.springframework.context.ApplicationContextAware
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import grails.util.GrailsUtil
+import org.springframework.web.context.request.RequestContextHolder
 
 /**
- * It is a session-scope service
+ * session-scope service that is responsible to bind variables for every request. The following variables are
+ * available in any script :
+ *  - application
+ *  - context
+ *  - session
+ *  - request
+ *  - shell
  */
 class ConsoleService implements ApplicationContextAware {
   static Logger logger = LoggerFactory.getLogger(ConsoleService.class)
@@ -16,14 +23,24 @@ class ConsoleService implements ApplicationContextAware {
   def grailsApplication
   def shell
 
+  def createShell() {
+    shell = new GroovyShell(new Binding(
+            'application': grailsApplication,
+            'context': applicationContext,
+            'session': RequestContextHolder.requestAttributes.request.session))
+    shell.'shell' = shell
+  }
+
+  def bindShell() {
+    if (!shell) shell = createShell()
+    shell.'request' = RequestContextHolder.requestAttributes.request
+  }
+
   def eval(code) {
-    if (logger.isTraceEnabled()) logger.trace("eval() - code: $code, session: $session")
-    if (!shell) {
-      shell = new GroovyShell(new Binding(ctx: applicationContext, grailsApplication: grailsApplication))
-      if (logger.isTraceEnabled()) logger.trace("eval() - created a new Groovy Shell - shell: $shell")
-    }
-    def result = [output: new StringWriter()]
-    shell.setVariable('output', new PrintWriter(result.'output'))
+    if (logger.isTraceEnabled()) logger.trace("eval() - code: $code, shell: $shell")
+    bindShell()
+    def result = [out: new StringWriter()]
+    shell.'out' = new PrintWriter(result.'out')
     try {
       result.'returnValue' = shell.evaluate(code)
     } catch (t) {
