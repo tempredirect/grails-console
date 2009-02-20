@@ -1,0 +1,17 @@
+<plugin name='console' version='0.1' grailsVersion='1.1-RC1 &gt; *'>
+  <author>Siegfried Puchbauer/Mingfai Ma</author>
+  <authorEmail>siegfried.puchbauer@gmail.com / mingfai.ma@gmail.com</authorEmail>
+  <title>Web-based Groovy Console for Grails</title>
+  <description>\
+Install a web-based Groovy consle for interactive runtime application management
+</description>
+  <documentation>http://grails.org/Console+Plugin</documentation>
+  <resources>
+    <resource>BootStrap</resource>
+    <resource>Config</resource>
+    <resource>DataSource</resource>
+    <resource>spring.resources</resource>
+    <resource>UrlMappings</resource>
+  </resources>
+  <dependencies />
+</plugin>
