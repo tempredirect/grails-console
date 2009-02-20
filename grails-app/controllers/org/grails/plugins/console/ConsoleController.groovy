@@ -11,7 +11,9 @@ class ConsoleController {
   static Logger logger = LoggerFactory.getLogger(ConsoleService.class)
   def consoleService
 
-  def index = { }
+  def index = {
+    render(view:params.'dev'?'dev':'index')
+  }
 
   def execute = {
     long startTime = System.currentTimeMillis()
@@ -23,16 +25,15 @@ class ConsoleController {
     try {
       result = consoleService.eval(code)
       if (!result.'exception') {
-        def returnValue = result.'returnValue'
-        out << result.'output'?.encodeAsHTML()
+        out << result.'out'?.encodeAsHTML()
         out.println '<span class="script-result">'
-        out.println "Result: ${returnValue?.inspect()?.encodeAsHTML()}"
+        out.println "Result: ${result.'returnValue'?.inspect()?.encodeAsHTML()}"
         out.println "&laquo; Executed in ${System.currentTimeMillis() - startTime} ms &raquo;"
         out.println '</span>'
         jsonHeader([success: true] as JSON)
       } else {
         jsonHeader([success: false, runtimeError: true] as JSON)
-        out << result.'output'?.encodeAsHTML()
+        out << result.'out'?.encodeAsHTML()
         out.println '<div class="stacktrace">'
         out.println "Exception ${result.'exception'}"
         out.println "${result.'stacktrace'}"
@@ -48,9 +49,7 @@ class ConsoleController {
       GrailsUtil.printSanitizedStackTrace(t, new PrintWriter(out))
       out.println '</div>'
     }
-
-
-    result = out.toString()
-    render text: result.toString()
+    
+    render text: out.toString()
   }
 }
