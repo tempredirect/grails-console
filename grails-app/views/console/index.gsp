@@ -37,9 +37,9 @@
          background: #ddd;
       }
    </style>
-   <script src="${createLinkTo(dir:'js/codemirror/js', file: 'codemirror.js')}" type="text/javascript" charset="utf-8"></script>
-   <script src="${createLinkTo(dir:'js/codemirror/js', file: 'mirrorframe.js')}" type="text/javascript" charset="utf-8"></script>
 
+   <script src="${request.contextPath}${pluginContextPath}/js/codemirror/js/mirrorframe.js" type="text/javascript" charset="utf-8"></script>
+  <script src="${request.contextPath}${pluginContextPath}/js/codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
    <h1>Grails Console</h1>
@@ -65,8 +65,8 @@
             height: "300px",
             content: textarea.value,
             parserfile: ["tokenizegroovy.js", "parsegroovy.js"],
-            stylesheet: "${createLinkTo(dir:'js/codemirror', file: 'css/jscolors.css')}",
-            path: "${createLinkTo(dir:'js/codemirror/js')}/",
+            stylesheet: "${request.contextPath}${pluginContextPath}/js/codemirror/css/jscolors.css",
+            path: "${request.contextPath}${pluginContextPath}/js/codemirror/js/",
             autoMatchParens: true,
             dumbTabs: true
          });
