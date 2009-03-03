@@ -1,0 +1,2 @@
+0.1.1	2009-03-03
+  - upgraded to Grails 1.1 RC2
