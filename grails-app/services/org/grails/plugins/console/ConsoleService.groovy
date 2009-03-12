@@ -46,6 +46,7 @@ class ConsoleService implements ApplicationContextAware {
     } catch (t) {
       result.'exception' = t; result.'stacktrace' = new StringWriter()
       GrailsUtil.printSanitizedStackTrace(t, new PrintWriter(result.'stacktrace'))
+      logger.error('exception in script', t)
     }
     if (logger.isDebugEnabled()) logger.debug("eval() - code: $code, return: $result")
     return result;
