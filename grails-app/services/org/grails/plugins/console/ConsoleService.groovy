@@ -24,7 +24,7 @@ class ConsoleService implements ApplicationContextAware {
   def shell
 
   def createShell() {
-    shell = new GroovyShell(new Binding(
+    shell = new GroovyShell(this.class.classLoader, new Binding(
             'application': grailsApplication,
             'context': applicationContext,
             'session': RequestContextHolder.requestAttributes.request.session))

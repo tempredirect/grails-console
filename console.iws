@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" readonly="true" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/console.iws" afterPath="$PROJECT_DIR$/console.iws" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CHANGE.txt" afterPath="$PROJECT_DIR$/CHANGE.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/grails-app/services/org/grails/plugins/console/ConsoleService.groovy" afterPath="$PROJECT_DIR$/grails-app/services/org/grails/plugins/console/ConsoleService.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application.properties" afterPath="$PROJECT_DIR$/application.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ConsoleGrailsPlugin.groovy" afterPath="$PROJECT_DIR$/ConsoleGrailsPlugin.groovy" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="console.iws" />
@@ -71,10 +74,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ConsoleService.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="ConsoleGrailsPlugin.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ConsoleGrailsPlugin.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="1" column="24" selection-start="52" selection-end="52" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CHANGE.txt" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CHANGE.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="6" column="0" selection-start="178" selection-end="178" vertical-scroll-proportion="0.11874273">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConsoleService.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/services/org/grails/plugins/console/ConsoleService.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="21" column="51" selection-start="702" selection-end="740" vertical-scroll-proportion="0.2596945">
+            <state line="24" column="64" selection-start="777" selection-end="799" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -83,7 +104,7 @@
       <file leaf-file-name="ConsoleController.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/grails-app/controllers/org/grails/plugins/console/ConsoleController.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="36" selection-start="668" selection-end="668" vertical-scroll-proportion="-6.9666667">
+            <state line="25" column="36" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -321,9 +342,9 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RunManager" selected="Grails Application.console">
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -485,7 +506,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1680" height="1020" extended-state="0" />
+    <frame x="-4" y="-4" width="1688" height="1028" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
@@ -501,7 +522,7 @@
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16891892" sideWeight="0.66516346" order="0" side_tool="false" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16870415" sideWeight="0.66516346" order="0" side_tool="false" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" />
@@ -615,16 +636,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ConsoleGrailsPlugin.groovy">
+    <entry file="file://$PROJECT_DIR$/grails-app/views/console/index.gsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="4" column="48" selection-start="172" selection-end="202" vertical-scroll-proportion="0.0">
+        <state line="44" column="152" selection-start="1281" selection-end="1281" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/views/console/index.gsp">
+    <entry file="file://$PROJECT_DIR$/grails-app/controllers/org/grails/plugins/console/ConsoleController.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="152" selection-start="1281" selection-end="1281" vertical-scroll-proportion="0.0">
+        <state line="25" column="36" selection-start="668" selection-end="668" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/grails-app/services/org/grails/plugins/console/ConsoleService.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="64" selection-start="777" selection-end="799" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -636,16 +664,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/controllers/org/grails/plugins/console/ConsoleController.groovy">
+    <entry file="file://$PROJECT_DIR$/ConsoleGrailsPlugin.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="36" selection-start="668" selection-end="668" vertical-scroll-proportion="-6.9666667">
+        <state line="1" column="24" selection-start="52" selection-end="52" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/grails-app/services/org/grails/plugins/console/ConsoleService.groovy">
+    <entry file="file://$PROJECT_DIR$/CHANGE.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="51" selection-start="702" selection-end="740" vertical-scroll-proportion="0.2596945">
+        <state line="6" column="0" selection-start="178" selection-end="178" vertical-scroll-proportion="0.11874273">
           <folding />
         </state>
       </provider>
