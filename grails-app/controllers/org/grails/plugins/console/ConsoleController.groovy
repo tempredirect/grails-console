@@ -25,18 +25,22 @@ class ConsoleController {
     try {
       result = consoleService.eval(code)
       if (!result.'exception') {
-        out << result.'out'?.encodeAsHTML()
-        out.println '<span class="script-result">'
-        out.println "Result: ${result.'returnValue'?.inspect()?.encodeAsHTML()}"
-        out.println "&laquo; Executed in ${System.currentTimeMillis() - startTime} ms &raquo;"
-        out.println '</span>'
+        out << '<div class="output">'
+        out << result.'out'?.encodeAsConsoleOutput()
+        out << '</div>'
+        out.println '<div class="script-result">' 
+        out.println """<span class="exec-time">${System.currentTimeMillis() - startTime} ms</span>"""
+        out.println """Result: <span class="exec-res">${result.'returnValue'?.inspect()?.encodeAsConsoleOutput()}</span>"""
+        out.println '</div>'
         jsonHeader([success: true] as JSON)
       } else {
         jsonHeader([success: false, runtimeError: true] as JSON)
-        out << result.'out'?.encodeAsHTML()
+        out << '<div class="output">'
+        out << result.'out'?.encodeAsConsoleOutput()
+        out << '</div>'
         out.println '<div class="stacktrace">'
         out.println "Exception ${result.'exception'}"
-        out.println "${result.'stacktrace'}"
+        out.println "${result.'stacktrace'.encodeAsConsoleOutput()}"
         out.println '</div>'
       }
 

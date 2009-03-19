@@ -1,6 +1,6 @@
-/* Tokenizer for JavaScript code */
+/* Tokenizer for Groovy code */
 
-var tokenizeJavaScript = (function() {
+var tokenizeGroovy = (function() {
   // Advance the stream until the given character (not preceded by a
   // backslash) is encountered, or the end of the line is reached.
   function nextUntilUnescaped(source, end) {
@@ -27,22 +27,22 @@ var tokenizeJavaScript = (function() {
     }
     // keywords that take a parenthised expression, and then a
     // statement (if)
-    var keywordA = result("keyword a", "js-keyword");
+    var keywordA = result("keyword a", "groovy-keyword");
     // keywords that take just a statement (else)
-    var keywordB = result("keyword b", "js-keyword");
+    var keywordB = result("keyword b", "groovy-keyword");
     // keywords that optionally take an expression, and form a
     // statement (return)
-    var keywordC = result("keyword c", "js-keyword");
-    var operator = result("operator", "js-keyword");
-    var atom = result("atom", "js-atom");
+    var keywordC = result("keyword c", "groovy-keyword");
+    var operator = result("operator", "groovy-keyword");
+    var atom = result("atom", "groovy-atom");
     return {
       "if": keywordA, "switch": keywordA, "while": keywordA, "with": keywordA,
       "else": keywordB, "do": keywordB, "try": keywordB, "finally": keywordB,
       "return": keywordC, "break": keywordC, "continue": keywordC, "new": keywordC, "delete": keywordC, "throw": keywordC,
-      "in": operator, "typeof": operator, "instanceof": operator,
-      "def": result("var", "js-keyword"), "function": result("function", "js-keyword"), "catch": result("catch", "js-keyword"),
-      "for": result("for", "js-keyword"), 
-      "case": result("case", "js-keyword"), "default": result("default", "js-keyword"),
+      "in": operator, "typeof": operator, "instanceof": operator, "import": result("import", "groovy-keyword"), 
+      "def": result("def", "groovy-keyword"), "function": result("function", "groovy-keyword"), "catch": result("catch", "groovy-keyword"),
+      "for": result("for", "groovy-keyword"), 
+      "case": result("case", "groovy-keyword"), "default": result("default", "groovy-keyword"),
       "true": atom, "false": atom, "null": atom, "undefined": atom, "NaN": atom, "Infinity": atom
     };
   }();
@@ -75,7 +75,7 @@ var tokenizeJavaScript = (function() {
     function readHexNumber(){
       source.next(); // skip the 'x'
       source.nextWhile(isHexDigit);
-      return {type: "number", style: "js-atom"};
+      return {type: "number", style: "groovy-atom"};
     }
 
     function readNumber() {
@@ -90,7 +90,7 @@ var tokenizeJavaScript = (function() {
           source.next();
         source.nextWhile(isDigit);
       }
-      return {type: "number", style: "js-atom"};
+      return {type: "number", style: "groovy-atom"};
     }
     // Read a word, look it up in keywords. If not found, it is a
     // variable, otherwise it is a keyword of the type found.
@@ -99,12 +99,12 @@ var tokenizeJavaScript = (function() {
       var word = source.get();
       var known = keywords.hasOwnProperty(word) && keywords.propertyIsEnumerable(word) && keywords[word];
       return known ? {type: known.type, style: known.style, content: word} :
-      {type: "variable", style: "js-variable", content: word};
+      {type: "variable", style: "groovy-variable", content: word};
     }
     function readRegexp() {
       nextUntilUnescaped(source, "/");
       source.nextWhile(matcher(/[gi]/));
-      return {type: "regexp", style: "js-string"};
+      return {type: "regexp", style: "groovy-string"};
     }
     // Mutli-line comments are tricky. We want to return the newlines
     // embedded in them as regular newline tokens, and then continue
@@ -125,16 +125,16 @@ var tokenizeJavaScript = (function() {
         maybeEnd = (next == "*");
       }
       setInside(newInside);
-      return {type: "comment", style: "js-comment"};
+      return {type: "comment", style: "groovy-comment"};
     }
     function readOperator() {
       source.nextWhile(isOperatorChar);
-      return {type: "operator", style: "js-operator"};
+      return {type: "operator", style: "groovy-operator"};
     }
     function readString(quote) {
       var endBackSlash = nextUntilUnescaped(source, quote);
       setInside(endBackSlash ? quote : null);
-      return {type: "string", style: "js-string"};
+      return {type: "string", style: "groovy-string"};
     }
 
     // Fetch the next token. Dispatches on first character in the
@@ -148,7 +148,7 @@ var tokenizeJavaScript = (function() {
       return readString(ch);
     // with punctuation, the type of the token is the symbol itself
     else if (/[\[\]{}\(\),;\:\.]/.test(ch))
-      return {type: ch, style: "js-punctuation"};
+      return {type: ch, style: "groovy-punctuation"};
     else if (ch == "0" && (source.equals("x") || source.equals("X")))
       return readHexNumber();
     else if (isDigit(ch))
@@ -157,7 +157,7 @@ var tokenizeJavaScript = (function() {
       if (source.equals("*"))
       { source.next(); return readMultilineComment(ch); }
       else if (source.equals("/"))
-      { nextUntilUnescaped(source, null); return {type: "comment", style: "js-comment"};}
+      { nextUntilUnescaped(source, null); return {type: "comment", style: "groovy-comment"};}
       else if (regexp)
         return readRegexp();
       else

@@ -7,11 +7,11 @@
  * See manual.html for more info about the parser interface.
  */
 
-var JSParser = Editor.Parser = (function() {
+var GroovyParser = Editor.Parser = (function() {
   // Token types that can be considered to be atoms.
   var atomicTypes = {"atom": true, "number": true, "variable": true, "string": true, "regexp": true};
   // Constructor for the lexical context objects.
-  function JSLexical(indented, column, type, align, prev) {
+  function GroovyLexical(indented, column, type, align, prev) {
     // indentation at start of this line
     this.indented = indented;
     // column at which this scope was opened
@@ -27,12 +27,14 @@ var JSParser = Editor.Parser = (function() {
     this.prev = prev;
   }
   // My favourite JavaScript indentation rules.
-  function indentJS(lexical) {
-    return function(firstChars) {
+  function indentGroovy(lexical) { 
+      //return function() { return 0};
+    return function(firstChars) { 
+        console.debug(firstChars);
       var firstChar = firstChars && firstChars.charAt(0);
       var closing = firstChar == lexical.type;
       if (lexical.type == "vardef")
-        return lexical.indented + 4;
+        return lexical.indented;// + 4;
       else if (lexical.type == "form" && firstChar == "{")
         return lexical.indented;
       else if (lexical.type == "stat" || lexical.type == "form")
@@ -45,9 +47,9 @@ var JSParser = Editor.Parser = (function() {
   }
 
   // The parser-iterator-producing function itself.
-  function parseJS(input, basecolumn) {
+  function parseGroovy(input, basecolumn) {
     // Wrap the input in a token stream
-    var tokens = tokenizeJavaScript(input);
+    var tokens = tokenizeGroovy(input);
     // The parser state. cc is a stack of actions that have to be
     // performed to finish the current statement. For example we might
     // know that we still need to find a closing parenthesis and a
@@ -59,7 +61,7 @@ var JSParser = Editor.Parser = (function() {
     // variables defined in that, and the scopes above it.
     var context = null;
     // The lexical scope, used mostly for indentation.
-    var lexical = new JSLexical((basecolumn || 0) - 2, 0, "block", false);
+    var lexical = new GroovyLexical((basecolumn || 0) - 2, 0, "block", false);
     // Current column, and the indentation at the start of the current
     // line. Used to create lexical scope objects.
     var column = 0;
@@ -94,7 +96,7 @@ var JSParser = Editor.Parser = (function() {
           lexical.align = false;
         // Newline tokens get an indentation function associated with
         // them.
-        token.indentation = indentJS(lexical);
+        token.indentation = indentGroovy(lexical);
       }
       // No more processing for meaningless tokens.
       if (token.type == "whitespace" || token.type == "comment")
@@ -116,7 +118,7 @@ var JSParser = Editor.Parser = (function() {
             token.style = marked;
           // Here we differentiate between local and global variables.
           else if (token.type == "variable" && inScope(token.content))
-            token.style = "js-localvariable";
+            token.style = "groovy-localvariable";
           return token;
         }
       }
@@ -137,7 +139,7 @@ var JSParser = Editor.Parser = (function() {
         lexical = _lexical;
         cc = _cc.concat([]); // copies the array
         column = indented = 0;
-        tokens = tokenizeJavaScript(input, _tokenState);
+        tokens = tokenizeGroovy(input, _tokenState);
         return parser;
       };
     }
@@ -175,7 +177,7 @@ var JSParser = Editor.Parser = (function() {
     // Register a variable in the current scope.
     function register(varname){
       if (context){
-        mark("js-variabledef");
+        mark("groovy-variabledef");
         context.vars[varname] = true;
       }
     }
@@ -193,7 +195,7 @@ var JSParser = Editor.Parser = (function() {
     // Push a new lexical context of the given type.
     function pushlex(type){
       var result = function(){
-        lexical = new JSLexical(indented, column, type, null, lexical)
+        lexical = new GroovyLexical(indented, column, type, null, lexical)
       };
       result.lex = true;
       return result;
@@ -227,7 +229,6 @@ var JSParser = Editor.Parser = (function() {
       else if (type == "keyword a") cont(pushlex("form"), expression, statement, poplex);
       else if (type == "keyword b") cont(pushlex("form"), statement, poplex);
       else if (type == "{") cont(pushlex("}"), block, poplex);
-      else if (type == "function") cont(functiondef);
       else if (type == "for") cont(pushlex("form"), expect("("), pushlex(")"), forspec1, expect(")"), poplex, statement, poplex);
       else if (type == "variable") cont(pushlex("stat"), maybelabel);
       else if (type == "case") cont(expression, expect(":"));
@@ -238,7 +239,6 @@ var JSParser = Editor.Parser = (function() {
     // Dispatch expression types.
     function expression(type){
       if (atomicTypes.hasOwnProperty(type)) cont(maybeoperator);
-      else if (type == "function") cont(functiondef);
       else if (type == "keyword c") cont(expression);
       else if (type == "(") cont(pushlex(")"), expression, expect(")"), poplex);
       else if (type == "operator") cont(expression);
@@ -263,11 +263,11 @@ var JSParser = Editor.Parser = (function() {
     // Property names need to have their style adjusted -- the
     // tokenizer thinks they are variables.
     function property(type){
-      if (type == "variable") {mark("js-property"); cont();}
+      if (type == "variable") {mark("groovy-property"); cont();}
     }
     // This parses a property and its value in an object literal.
     function objprop(type){
-      if (type == "variable") mark("js-property");
+      if (type == "variable") mark("groovy-property");
       if (atomicTypes.hasOwnProperty(type)) cont(expect(":"), expression);
     }
     // Parses a comma-separated list of the things that are recognized
@@ -318,5 +318,5 @@ var JSParser = Editor.Parser = (function() {
     return parser;
   }
 
-  return {make: parseJS, electricChars: "{}"};
+  return {make: parseGroovy, electricChars: "{}"};
 })();

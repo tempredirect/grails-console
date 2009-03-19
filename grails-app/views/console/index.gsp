@@ -3,78 +3,153 @@
 <html>
 <head>
    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-   <title>Grails Web Console</title>
-   <style type="text/css" media="screen">
-      body, html {
+   <title>Grails Console</title>
+   <style type="text/css" media="screen"> 
+      body,html {
          margin: 0;
          padding: 0;
-         font-family: "Lucida Grande", Verdana, sans-serif;
-         background: #eee;
+         font-family: Arial, Sans-serif;
       }
-      h1 {
-         margin: 0px;
-         padding: 4px;
-         font-size: 15px;
-         background: #333;
+      #header {        
+         height: 49px;
+         background: transparent url(${request.contextPath}${pluginContextPath}/images/grails-console-header-bg.png);
+      }    
+      #header h1 {     
+         background: transparent url(${request.contextPath}${pluginContextPath}/images/grails-console-logo.png) no-repeat left top;
+         margin: 0;
+         padding: 10px 50px;
+         font-family: "Lucida Grande", Arial, Sans-serif;
+         font-weight: normal;
+         font-variant: small-caps;  
          color: #fff;
-      }
-      #code {
-         border-bottom: 1px solid #333;
-      }
-      #result {
-         padding: 3px;
-      }
-      .console-editor {
-         border-bottom: 1px solid #333;
-         background: #fff;
-      }
-      .stacktrace {
-         color: red;
+         font-size: 24px;
+      }                      
+      img {
+         border-style: none;
+      }           
+      #editor {
+         background: #333;
+      }           
+      #result {         
+         padding: 3px;        
          background: #ddd;
+         overflow: auto; 
+         clear: both;
+      }    
+      #result .output {
+         font-family: monospace;
+         font-size: 11px;
+      }
+      #result .stacktrace {     
+         margin: 4px;
+         padding: 5px;
+         -moz-border-radius: 5px;
+         -webkit-border-radius: 5px;
+         background: #cc2222;
+         color: #fff;
+         font-family: monospace;
+         font-size: 11px;
+      }
+      #drag-handle {
+         clear: both; 
+         height: 3px;
+         overflow: hidden;  
+         background: #666;   
+         cursor: pointer;
+         z-index: 3000;
+      }          
+      #loading-mask{
+         position:absolute;
+      	left:0;
+      	top:0;
+          width:100%;
+          height:100%;
+          z-index:20000;
+          background-color:white;
+      }
+      #loading{
+      	position:absolute;
+      	left:45%;
+      	top:40%;
+      	padding:2px;
+      	z-index:20001;
+          height:auto;
       }
       .script-result {
-         color: blue;
-         background: #ddd;
-      }
-   </style>
+         background: blue;
+         margin: 4px;
+         padding: 5px;
+         font-size: 9px;
+         color: #ddd;
+         -moz-border-radius: 5px;  
+         -webkit-border-radius: 5px;
 
+      }   
+      .script-result .exec-time {  
+         display: block;
+         color: #000;
+         background: #ccc; 
+         float: right;
+         padding: 1px 3px;   
+         -moz-border-radius: 2px;  
+         -webkit-border-radius: 2px;
+      }              
+      .script-result .exec-res {
+         font-family: monospace;
+         font-size: 11px;
+      }
+   </style>  
+   
    <script src="${request.contextPath}${pluginContextPath}/js/codemirror/js/mirrorframe.js" type="text/javascript" charset="utf-8"></script>
-  <script src="${request.contextPath}${pluginContextPath}/js/codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
+   <script src="${request.contextPath}${pluginContextPath}/js/codemirror/js/codemirror.js" type="text/javascript" charset="utf-8"></script>
 </head>
-<body>
-   <h1>Grails Console</h1>
-   <div class="console-editor">
-      <textarea id="code" style="width: 100%; height: 300px;" class="codepress java" rows="25" cols="100">// Groovy Code here</textarea>
+<body>   
+   <div id="progress">
+      <div id="loading-mask" style=""></div>
+      <div id="loading">
+        <div class="loading-indicator"><img src="${createLinkTo(dir: 'images', file: 'spinner.gif')}" width="16" height="16" style="margin-right:8px;" align="absmiddle"/>Loading...</div>
+      </div>   
+   </div>
+   <div id="header">
+      <h1>Grails Debug Console  </h1>
+   </div>
+   <div id="editor">
+      <textarea id="code" style="width: 100%; height: 300px;" rows="25" cols="100">// Groovy Code here</textarea>  
+      <div class="bottom-toolbar">  
+         <div class="buttons">
             <button id="submit">Execute</button>
-      <button id="clear">Clear Results</button>
-      <span id="progress" style="display: none;">
-         <img src="${createLinkTo(dir:'images',file:'spinner.gif')}" style="border: 0;" align="absmiddle" alt="" />
-         Executing Script...
-      </span>
-   </div>
+            <button id="clear">Clear Results</button>           
+         </div>
+         <span id="progress" style="display: none;">
+            <img src="${createLinkTo(dir:'images',file:'spinner.gif')}" style="border: 0;" align="absmiddle" alt="" />
+            Executing Script...
+         </span>  
+      </div> 
+      <div id="drag-handle">...</div>  
+   </div>   
    <div id="result">
-      <div style="color:#ddd">Script Output...</div>
-   </div>
+   </div>   
    <g:javascript library="scriptaculous" />
    <script type="text/javascript" charset="utf-8">
 
-      Event.observe(window, "dom:loaded", function(){
+      Event.observe(window, Prototype.Browser.IE ? 'load':"dom:loaded", function(){
 
          var textarea = $('code');
-         var editor = new MirrorFrame(CodeMirror.replace(textarea), {
+         window.editor = new MirrorFrame(CodeMirror.replace(textarea), {
             height: "300px",
             content: textarea.value,
             parserfile: ["tokenizegroovy.js", "parsegroovy.js"],
-            stylesheet: "${request.contextPath}${pluginContextPath}/js/codemirror/css/jscolors.css",
+            stylesheet: "${request.contextPath}${pluginContextPath}/js/codemirror/css/groovycolors.css",
             path: "${request.contextPath}${pluginContextPath}/js/codemirror/js/",
             autoMatchParens: true,
-            dumbTabs: true
+            disableSpellcheck: true,
+            lineNumbers: true
          });
 
          var submitButton = $('submit');
          var resultContainer = $('result');
-
-         submitButton.observe("click", function() {
+         
+         var executeCode = function() {
             $('progress').show();
             new Ajax.Request("${createLink(action: 'execute')}", {
                parameters: {
@@ -82,18 +157,49 @@
                },
                onSuccess: function(response, json) {
                   resultContainer.appendChild(
-                     new Element('pre').update(response.responseText)
-                  );
+                     new Element('div').update(response.responseText)
+                  );        
+                  resultContainer.scrollTop = resultContainer.scrollHeight;
                   $('progress').hide();
                }
             });
-
-         });
+            
+         }
+         submitButton.observe("click", executeCode);
          $('clear').observe("click", function() {
             resultContainer.update("");
-         });
-      });
+         });   
+         
+         $(document).observe('keyup', function(e){
+            //console.debug(arguments);
+         });  
+                                
+//         var handle = $('drag-handle'), ho = Position.cumulativeOffset(handle)[1], iframe = $$('#editor iframe')[0], ih = 300;
+//         new Draggable('drag-handle', {
+//            snap: function(x,y) {
+//               return [0, y];
+//            },
+//            onEnd: function() {          
+//               ih -= (ho - (ho=Position.cumulativeOffset(handle)[1]));
+//                iframe.setStyle({ height: (ih + 'px') });        
+//                doLayout();
+//            } 
+//         });   
 
+         var resultPanel = $('result');
+         var splitter = $('drag-handle'), sh = splitter.getHeight();
+         var doLayout = function() {
+            var wh = window.innerHeight||document.documentElement.clientHeight;
+            var splitOffset = Position.cumulativeOffset(splitter)[1] + sh + 6;    
+            resultPanel.setStyle({ height: ((wh - splitOffset) + "px")});
+         }                                                           
+         try {doLayout();}catch(e){}
+         
+         Event.observe(window, 'resize', doLayout);
+         $('loading').update("Executing...");
+         $('loading-mask').setOpacity(0.3);  
+         $('progress').hide();
+      });
    </script>
 </body>
 </html>

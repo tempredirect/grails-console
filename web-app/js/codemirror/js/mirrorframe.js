@@ -19,12 +19,12 @@ function MirrorFrame(place, options) {
     button.onclick = function(){self[action].call(self);};
   }
 
-  makeButton("Search", "search");
-  makeButton("Replace", "replace");
-  makeButton("Current line", "line");
-  makeButton("Jump to line", "jump");
-  makeButton("Insert constructor", "macro");
-  makeButton("Indent all", "reindent");
+//  makeButton("Search", "search");
+//  makeButton("Replace", "replace");
+//  makeButton("Current line", "line");
+//  makeButton("Jump to line", "jump");
+//  makeButton("Insert constructor", "macro");
+//  makeButton("Indent all", "reindent");
 
   this.mirror = new CodeMirror(this.home, options);
 }

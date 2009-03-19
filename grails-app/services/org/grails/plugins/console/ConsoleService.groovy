@@ -24,11 +24,11 @@ class ConsoleService implements ApplicationContextAware {
   def shell
 
   def createShell() {
-    shell = new GroovyShell(this.class.classLoader, new Binding(
+    shell = new GroovyShell(new Binding(
             'application': grailsApplication,
-            'context': applicationContext,
+            'context': applicationContext, 'ctx': applicationContext, 
             'session': RequestContextHolder.requestAttributes.request.session))
-    shell.'shell' = shell
+        shell.'shell' = shell
   }
 
   def bindShell() {
@@ -46,7 +46,6 @@ class ConsoleService implements ApplicationContextAware {
     } catch (t) {
       result.'exception' = t; result.'stacktrace' = new StringWriter()
       GrailsUtil.printSanitizedStackTrace(t, new PrintWriter(result.'stacktrace'))
-      logger.error('exception in script', t)
     }
     if (logger.isDebugEnabled()) logger.debug("eval() - code: $code, return: $result")
     return result;
