@@ -24,7 +24,7 @@ class ConsoleService implements ApplicationContextAware {
   def shell
 
   def createShell() {
-    shell = new GroovyShell(new Binding(
+    shell = new GroovyShell(grailsApplication.classLoader, new Binding(
             'application': grailsApplication,
             'context': applicationContext, 'ctx': applicationContext, 
             'session': RequestContextHolder.requestAttributes.request.session))
@@ -46,6 +46,7 @@ class ConsoleService implements ApplicationContextAware {
     } catch (t) {
       result.'exception' = t; result.'stacktrace' = new StringWriter()
       GrailsUtil.printSanitizedStackTrace(t, new PrintWriter(result.'stacktrace'))
+      logger.error "Exception occured while evaluating console script: $t", t
     }
     if (logger.isDebugEnabled()) logger.debug("eval() - code: $code, return: $result")
     return result;

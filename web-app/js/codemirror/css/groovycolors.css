@@ -25,6 +25,10 @@ span.groovy-operator {
 
 span.groovy-keyword {
   color: #3366ff;
+}                      
+
+span.grails-keyword {
+    font-weight: bold;
 }
 
 span.groovy-atom {

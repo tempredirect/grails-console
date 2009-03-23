@@ -22,15 +22,16 @@ class ConsoleController {
 
     def script = null, result = null, output
 
-    try {
+    try {                              
+      session['_grails_console_last_code_'] = code
       result = consoleService.eval(code)
-      if (!result.'exception') {
+      if (!result.'exception') {       
         out << '<div class="output">'
         out << result.'out'?.encodeAsConsoleOutput()
         out << '</div>'
         out.println '<div class="script-result">' 
         out.println """<span class="exec-time">${System.currentTimeMillis() - startTime} ms</span>"""
-        out.println """Result: <span class="exec-res">${result.'returnValue'?.inspect()?.encodeAsConsoleOutput()}</span>"""
+        out.println """<span class="exec-res">${result.'returnValue'?.inspect()?.encodeAsConsoleOutput()}</span>"""
         out.println '</div>'
         jsonHeader([success: true] as JSON)
       } else {

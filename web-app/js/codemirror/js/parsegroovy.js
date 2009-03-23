@@ -28,7 +28,7 @@ var GroovyParser = Editor.Parser = (function() {
   }
   // My favourite JavaScript indentation rules.
   function indentGroovy(lexical) { 
-      //return function() { return 0};
+      return function() {return 0};
     return function(firstChars) { 
         console.debug(firstChars);
       var firstChar = firstChars && firstChars.charAt(0);
