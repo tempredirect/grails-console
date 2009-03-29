@@ -5,7 +5,7 @@ class ConsoleGrailsPlugin {
     def author = "Siegfried Puchbauer/Mingfai Ma", authorEmail = "siegfried.puchbauer@gmail.com / mingfai.ma@gmail.com"
     def title = "Web-based Groovy Console for Grails"
     def description = '''\\
-Install a web-based Groovy console for interactive runtime application management
+A web-based Groovy console for interactive runtime application management and debugging
 '''
     def documentation = "http://grails.org/plugin/console"
 

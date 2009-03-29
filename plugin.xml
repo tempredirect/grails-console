@@ -3,7 +3,7 @@
   <authorEmail>siegfried.puchbauer@gmail.com / mingfai.ma@gmail.com</authorEmail>
   <title>Web-based Groovy Console for Grails</title>
   <description>\
-Install a web-based Groovy console for interactive runtime application management
+A web-based Groovy console for interactive runtime application management and debugging
 </description>
   <documentation>http://grails.org/plugin/console</documentation>
   <resources>
